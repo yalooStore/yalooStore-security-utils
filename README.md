@@ -1,1 +1,0 @@
-# yalooStore-security-utils
