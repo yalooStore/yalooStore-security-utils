@@ -1,4 +1,4 @@
-package com.yalooStore.token;
+package com.yalooStore.authenticatioToken;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

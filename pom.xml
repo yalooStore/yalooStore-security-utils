@@ -39,12 +39,18 @@
             <artifactId>spring-security-core</artifactId>
             <version>6.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>5.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.yalooStore</groupId>
+            <artifactId>yalooStore-common-utils</artifactId>
+            <version>v1.0.8</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
