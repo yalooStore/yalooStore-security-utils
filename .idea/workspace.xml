@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec9cf16f-1115-450b-acce-8f24dfe56c8c" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yalooStore/authenticatioToken/JwtAuthenticationToken.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yalooStore/dto/AuthorizationResponseDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yalooStore/filter/JwtAuthenticationFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yalooStore/provide/JwtAuthenticationProvider$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yalooStore/provide/JwtAuthenticationProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yalooStore/util/AuthUtil.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +95,10 @@
       <workItem from="1688726780056" duration="3162000" />
       <workItem from="1688978159155" duration="3318000" />
       <workItem from="1688988561742" duration="820000" />
+      <workItem from="1688990371088" duration="962000" />
+      <workItem from="1688993943589" duration="610000" />
+      <workItem from="1689002564625" duration="679000" />
+      <workItem from="1689003382051" duration="611000" />
     </task>
     <servers />
   </component>
