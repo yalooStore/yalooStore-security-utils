@@ -1,11 +1,11 @@
-package com.yalooStore.dto;
+package com.yalooStore.security_utils.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

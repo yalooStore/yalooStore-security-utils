@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec9cf16f-1115-450b-acce-8f24dfe56c8c" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yalooStore/filter/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yalooStore/provide/JwtAuthenticationProvide.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yalooStore/token/JwtAuthenticationToken.java" beforeDir="false" />
-    </list>
+    <list default="true" id="ec9cf16f-1115-450b-acce-8f24dfe56c8c" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +84,7 @@
       <updated>1688722744973</updated>
       <workItem from="1688722745963" duration="53000" />
       <workItem from="1688726780056" duration="3162000" />
-      <workItem from="1688978159155" duration="3180000" />
+      <workItem from="1688978159155" duration="3318000" />
     </task>
     <servers />
   </component>

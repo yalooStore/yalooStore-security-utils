@@ -1,4 +1,4 @@
-package com.yalooStore.util;
+package com.yalooStore.security_utils.util;
 
 
 import lombok.AllArgsConstructor;
@@ -16,8 +16,7 @@ public enum AuthUtil {
     HEADER_UUID("HEADER_UUID"),
     HEADER_EXPIRED_TIME("HEADER_EXPIRED_TIME"),
     JWT("JWT"),
-    PRINCIPAL("PRINCIPAL")
-    ;
+    PRINCIPAL("PRINCIPAL");
     private String value;
 
 

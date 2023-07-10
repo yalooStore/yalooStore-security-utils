@@ -1,9 +1,9 @@
-package com.yalooStore.provide;
+package com.yalooStore.security_utils.provide;
 
 
-import com.yalooStore.authenticatioToken.JwtAuthenticationToken;
+import com.yalooStore.security_utils.authenticatioToken.JwtAuthenticationToken;
 import com.yalooStore.common_utils.dto.ResponseDto;
-import com.yalooStore.dto.AuthorizationResponseDto;
+import com.yalooStore.security_utils.dto.AuthorizationResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
@@ -28,24 +27,21 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getCredentials();
-
-
         try {
-            HttpHeaders headers =new HttpHeaders();
+            HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Authorization", token);
 
-            URI uri = UriComponentsBuilder.fromUriString(authServerUrl).pathSegment("authorizations").build().toUri();
 
             RequestEntity<Void> getAuthorization = new RequestEntity<>(
                     headers,
                     HttpMethod.GET,
-                    uri
+                    URI.create(authServerUrl + "/authorizations")
             );
 
             ResponseEntity<ResponseDto<AuthorizationResponseDto>> responseEntity =
                     restTemplate.exchange(getAuthorization,
-                            new ParameterizedTypeReference<>() {
+                            new ParameterizedTypeReference<ResponseDto<AuthorizationResponseDto>>() {
                             });
 
             AuthorizationResponseDto data = responseEntity.getBody().getData();
@@ -56,7 +52,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                     data.getAuthority()
             );
 
-        } catch (RestClientException e){
+        } catch (RestClientException e) {
             throw new BadCredentialsException("token is invalid!");
         }
     }
