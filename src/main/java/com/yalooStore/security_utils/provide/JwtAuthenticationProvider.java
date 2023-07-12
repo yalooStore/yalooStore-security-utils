@@ -12,10 +12,12 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Objects;
 
 
 @RequiredArgsConstructor
@@ -47,8 +49,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
             AuthorizationResponseDto data = responseEntity.getBody().getData();
 
+            String removePrefix = getRemovePrefixToken(token);
             return JwtAuthenticationToken.authenticated(
-                    token,
+                    removePrefix,
                     data.getLoginId(),
                     data.getAuthority()
             );
@@ -57,6 +60,14 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("token is invalid!");
         }
     }
+
+    private String getRemovePrefixToken(String token) {
+        if (StringUtils.hasText(token) && token.startsWith("Bearer ")){
+            token = token.substring(7);
+        }
+        throw new RestClientException("token valid exception!");
+    }
+
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.isAssignableFrom(JwtAuthenticationToken.class);
