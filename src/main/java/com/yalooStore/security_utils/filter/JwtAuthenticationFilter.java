@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.util.StringUtils;
@@ -35,9 +36,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(token);
 
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+
+        logger.info("auth token? =========" + authenticationToken.getCredentials());
         SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
 
         SecurityContextHolder.setContext(securityContext);
+
+        logger.info("AUTH SAVED INFORMATION !?!?!? "
+                +SecurityContextHolder.getContext().getAuthentication().getCredentials());
 
         filterChain.doFilter(request, response);
     }
