@@ -8,10 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -26,7 +24,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException {
+            FilterChain filterChain
+    ) throws ServletException, IOException {
         String token = request.getHeader("Authorization");
         if (Objects.isNull(token)) {
             filterChain.doFilter(request, response);
@@ -36,14 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(token);
 
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-
-        logger.info("auth token? =========" + authenticationToken.getCredentials());
         SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
 
         SecurityContextHolder.setContext(securityContext);
-
-        logger.info("AUTH SAVED INFORMATION !?!?!? "
-                +SecurityContextHolder.getContext().getAuthentication().getCredentials());
 
         filterChain.doFilter(request, response);
     }

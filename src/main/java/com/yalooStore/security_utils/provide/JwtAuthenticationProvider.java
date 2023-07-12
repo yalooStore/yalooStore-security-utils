@@ -1,71 +1,61 @@
 package com.yalooStore.security_utils.provide;
 
+import java.net.URI;
 
-import com.yalooStore.security_utils.authenticatioToken.JwtAuthenticationToken;
 import com.yalooStore.common_utils.dto.ResponseDto;
+import com.yalooStore.security_utils.authenticatioToken.JwtAuthenticationToken;
 import com.yalooStore.security_utils.dto.AuthorizationResponseDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
-import java.util.Objects;
-
 
 @RequiredArgsConstructor
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final RestTemplate restTemplate;
-
-    private final String authServerUrl;
+    private final String authUrl;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication)
+            throws AuthenticationException {
         String token = (String) authentication.getCredentials();
 
-        System.out.println("shop provider token ======================"+token);
         try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", token);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Authorization", token);
 
-            RequestEntity<Void> requestEntity = new RequestEntity<>(
-                    headers,
+            RequestEntity<Void> requestEntity = new RequestEntity<Void>(
+                    httpHeaders,
                     HttpMethod.GET,
-                    URI.create(authServerUrl + "/authorizations")
+                    URI.create(authUrl + "/authorizations")
             );
 
-            ResponseEntity<ResponseDto<AuthorizationResponseDto>> responseEntity =
-                    restTemplate.exchange(requestEntity,
-                            new ParameterizedTypeReference<>() {
-                            });
+            ResponseEntity<ResponseDto<AuthorizationResponseDto>> authorizationMetaEntity = restTemplate.exchange(
+                    requestEntity,
+                    new ParameterizedTypeReference<ResponseDto<AuthorizationResponseDto>>() {
+                    }
+            );
 
-            AuthorizationResponseDto data = responseEntity.getBody().getData();
+            AuthorizationResponseDto authorizationMeta = authorizationMetaEntity.getBody()
+                    .getData();
 
-            String removePrefix = getRemovePrefixToken(token);
             return JwtAuthenticationToken.authenticated(
-                    removePrefix,
-                    data.getLoginId(),
-                    data.getAuthority()
+                    token,
+                    authorizationMeta.getLoginId(),
+                    authorizationMeta.getAuthority()
             );
-
         } catch (RestClientException e) {
-            throw new BadCredentialsException("token is invalid!");
+            throw new BadCredentialsException("invalid token : " + token);
         }
-    }
-
-    private String getRemovePrefixToken(String token) {
-        if (StringUtils.hasText(token) && token.startsWith("Bearer ")){
-            token = token.substring(7);
-        }
-        throw new RestClientException("token valid exception!");
     }
 
     @Override
