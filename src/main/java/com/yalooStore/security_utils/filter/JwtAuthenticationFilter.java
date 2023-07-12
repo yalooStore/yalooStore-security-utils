@@ -33,16 +33,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         logger.info("util auth filter after  ======= ");
 
-        JwtAuthenticationToken jwtAuthenticationToken = JwtAuthenticationToken.unAuthenticated(token);
-        Authentication authenticate = authenticationManager.authenticate(jwtAuthenticationToken);
+        JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(token);
 
+        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+        SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
 
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
-        //SecurityContextHolder.setContext(securityContext);
-        logger.info("util auth filter after save auth? ======="+authentication.getPrincipal());
+        SecurityContextHolder.setContext(securityContext);
 
         filterChain.doFilter(request, response);
 

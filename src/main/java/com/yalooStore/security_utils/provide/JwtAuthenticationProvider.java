@@ -28,8 +28,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getCredentials();
-
-
+        
         System.out.println("shop provider token ======================"+token);
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -50,7 +49,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
             AuthorizationResponseDto data = responseEntity.getBody().getData();
 
-            return JwtAuthenticationToken.Authenticated(
+            return JwtAuthenticationToken.authenticated(
                     token,
                     data.getLoginId(),
                     data.getAuthority()
