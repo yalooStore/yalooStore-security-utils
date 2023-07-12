@@ -24,11 +24,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = request.getHeader("Authorization");
-
         if(Objects.isNull(token)){
+            logger.info("util auth filter before ======{}");
+
             filterChain.doFilter(request, response);
             return;
         }
+
+        logger.info("util auth filter after {} ======= ");
+
         JwtAuthenticationToken jwtAuthenticationToken = JwtAuthenticationToken.unAuthenticated(token);
         Authentication authenticate = authenticationManager.authenticate(jwtAuthenticationToken);
 

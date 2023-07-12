@@ -1,7 +1,6 @@
 com/yalooStore/security_utils/util/AuthUtil.class
 com/yalooStore/security_utils/provide/JwtAuthenticationProvider$1.class
 com/yalooStore/security_utils/provide/JwtAuthenticationProvider.class
-com/yalooStore/package-info.class
 com/yalooStore/security_utils/filter/JwtAuthenticationFilter.class
 com/yalooStore/security_utils/authenticatioToken/JwtAuthenticationToken.class
 com/yalooStore/Main.class

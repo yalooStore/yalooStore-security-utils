@@ -5,6 +5,7 @@ import com.yalooStore.security_utils.authenticatioToken.JwtAuthenticationToken;
 import com.yalooStore.common_utils.dto.ResponseDto;
 import com.yalooStore.security_utils.dto.AuthorizationResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -27,6 +28,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getCredentials();
+
+
+        System.out.println("shop provider token ======================"+token);
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -41,7 +45,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
             ResponseEntity<ResponseDto<AuthorizationResponseDto>> responseEntity =
                     restTemplate.exchange(getAuthorization,
-                            new ParameterizedTypeReference<ResponseDto<AuthorizationResponseDto>>() {
+                            new ParameterizedTypeReference<>() {
                             });
 
             AuthorizationResponseDto data = responseEntity.getBody().getData();
@@ -56,7 +60,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("token is invalid!");
         }
     }
-
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.isAssignableFrom(JwtAuthenticationToken.class);
