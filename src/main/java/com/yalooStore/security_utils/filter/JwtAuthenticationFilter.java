@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -23,24 +24,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String token = request.getHeader("Authorization");
-        if(Objects.isNull(token)){
-            logger.info("util auth filter before ======");
+        String token = parseJwt(request);
 
+        if(Objects.isNull(token)){
             filterChain.doFilter(request, response);
-            return;
         }
 
-        logger.info("util auth filter after  ======= ");
-
         JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(token);
-
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
 
+        SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
         SecurityContextHolder.setContext(securityContext);
 
         filterChain.doFilter(request, response);
-
     }
+
+    private String parseJwt(HttpServletRequest request) {
+        String headerAuth = request.getHeader("Authorization");
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")){
+            return headerAuth;
+        }
+        return null;
+    }
+
 }

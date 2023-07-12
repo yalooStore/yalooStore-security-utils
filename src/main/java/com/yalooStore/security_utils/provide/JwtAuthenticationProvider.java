@@ -28,22 +28,20 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getCredentials();
-        
+
         System.out.println("shop provider token ======================"+token);
         try {
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Authorization", token);
 
-
-            RequestEntity<Void> getAuthorization = new RequestEntity<>(
+            RequestEntity<Void> requestEntity = new RequestEntity<>(
                     headers,
                     HttpMethod.GET,
                     URI.create(authServerUrl + "/authorizations")
             );
 
             ResponseEntity<ResponseDto<AuthorizationResponseDto>> responseEntity =
-                    restTemplate.exchange(getAuthorization,
+                    restTemplate.exchange(requestEntity,
                             new ParameterizedTypeReference<>() {
                             });
 
