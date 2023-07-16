@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.util.StringUtils;
@@ -49,8 +50,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(removePreFixToken);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
-        SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
-        SecurityContextHolder.setContext(securityContext);
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticate);
 
         filterChain.doFilter(request, response);
     }
