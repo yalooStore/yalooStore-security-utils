@@ -35,7 +35,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", token);
+            httpHeaders.setBearerAuth(token);
+            System.out.println("shop? provider token zz"+ token);
 
             RequestEntity<Void> requestEntity = new RequestEntity<Void>(
                     httpHeaders,
