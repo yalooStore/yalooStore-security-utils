@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -31,18 +32,36 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = request.getHeader("Authorization");
         System.out.println("utils auth filter -> token? " + token);
+
         if (Objects.isNull(token)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(token);
+        System.out.println("여기가 실행되긴 하나?? oncePerRequestFilter");
+        String removePreFixToken = getRemovePreFixToken(token);
+
+        if (Objects.isNull(removePreFixToken)){
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(removePreFixToken);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
         SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
         SecurityContextHolder.setContext(securityContext);
 
         filterChain.doFilter(request, response);
+    }
+
+    public String getRemovePreFixToken(String token){
+        boolean starts = token.startsWith("Bearer ");
+
+        if (!StringUtils.hasText(token) && starts){
+            return null;
+        }
+        return token.substring(7);
     }
 }
 
