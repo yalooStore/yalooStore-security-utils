@@ -50,9 +50,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(removePreFixToken);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        context.setAuthentication(authenticate);
+        SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
+        SecurityContextHolder.setContext(securityContext);
 
+        
         filterChain.doFilter(request, response);
     }
 

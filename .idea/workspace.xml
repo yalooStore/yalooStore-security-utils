@@ -96,12 +96,28 @@
       <workItem from="1689002564625" duration="679000" />
       <workItem from="1689003382051" duration="15919000" />
       <workItem from="1689340818526" duration="2781000" />
-      <workItem from="1689499099752" duration="1277000" />
+      <workItem from="1689499099752" duration="4244000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/yalooStore/security_utils/filter/JwtAuthenticationFilter.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/yalooStore/security_utils/filter/JwtAuthenticationFilter.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
