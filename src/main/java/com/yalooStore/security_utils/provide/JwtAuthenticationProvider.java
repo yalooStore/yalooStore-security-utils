@@ -6,6 +6,7 @@ import com.yalooStore.common_utils.dto.ResponseDto;
 import com.yalooStore.security_utils.authenticatioToken.JwtAuthenticationToken;
 import com.yalooStore.security_utils.dto.AuthorizationResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final RestTemplate restTemplate;
@@ -28,6 +30,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
         String token = (String) authentication.getCredentials();
+
+        System.out.println("========utils authentication provider start========");
 
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -45,8 +49,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                     }
             );
 
-            AuthorizationResponseDto authorizationMeta = authorizationMetaEntity.getBody()
-                    .getData();
+            AuthorizationResponseDto authorizationMeta = authorizationMetaEntity.getBody().getData();
 
             return JwtAuthenticationToken.authenticated(
                     token,

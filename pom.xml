@@ -35,10 +35,17 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>6.0.2</version>
         </dependency>
+
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -52,7 +59,6 @@
             <artifactId>yalooStore-common-utils</artifactId>
             <version>v1.0.8</version>
         </dependency>
-
     </dependencies>
 
     <repositories>

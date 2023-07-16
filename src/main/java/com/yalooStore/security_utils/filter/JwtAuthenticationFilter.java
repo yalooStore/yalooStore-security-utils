@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import java.util.Objects;
 
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final AuthenticationManager authenticationManager;
 
@@ -26,17 +28,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
+
         String token = request.getHeader("Authorization");
+        System.out.println("utils auth filter -> token? " + token);
         if (Objects.isNull(token)) {
             filterChain.doFilter(request, response);
             return;
         }
 
         JwtAuthenticationToken authenticationToken = JwtAuthenticationToken.unAuthenticated(token);
-
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
 
+        SecurityContextImpl securityContext = new SecurityContextImpl(authenticate);
         SecurityContextHolder.setContext(securityContext);
 
         filterChain.doFilter(request, response);
