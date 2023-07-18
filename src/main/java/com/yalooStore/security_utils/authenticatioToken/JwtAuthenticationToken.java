@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -60,6 +59,10 @@ public class JwtAuthenticationToken implements Authentication {
         return new User(loginId, null, getAuthorities());
     }
 
+
+    /**
+     * get login id 
+     * */
     @Override
     public Object getPrincipal() {
         return loginId;

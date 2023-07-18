@@ -20,7 +20,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
-@Slf4j
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final RestTemplate restTemplate;
@@ -31,12 +30,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throws AuthenticationException {
         String token = (String) authentication.getCredentials();
 
-        System.out.println("========utils authentication provider start========");
-
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setBearerAuth(token);
-            System.out.println("shop? provider token zz"+ token);
+            httpHeaders.add("Authorization", token);
 
             RequestEntity<Void> requestEntity = new RequestEntity<Void>(
                     httpHeaders,
@@ -50,7 +46,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                     }
             );
 
-            AuthorizationResponseDto authorizationMeta = authorizationMetaEntity.getBody().getData();
+            AuthorizationResponseDto authorizationMeta = authorizationMetaEntity.getBody()
+                    .getData();
 
             return JwtAuthenticationToken.authenticated(
                     token,
